@@ -226,6 +226,7 @@ body {
 
 .tt-upload-btn,
 .tt-delete-btn,
+.tt-edit-btn,
 .tt-profile-actions button,
 .tt-back,
 .tt-dialog-actions button {
@@ -244,7 +245,7 @@ body {
 .tt-back {
   border: none;
   background: transparent;
-  padding: 0;
+  padding-bottom: 20px;
   color: var(--olive);
 }
 
@@ -288,13 +289,16 @@ body {
   border-color: var(--accent-soft);
 }
 
+.tt-edit-btn,
 .tt-delete-btn {
   background: #f7d7cf;
   color: #8f2e22;
   border-color: #f0b9aa;
-  margin-left: 10px;
+  margin: 20px 20px;
+  margin-left: 0;
 }
 
+.tt-edit-btn::hover,
 .tt-delete-btn:hover {
   background: #eebfb0;
   border-color: #e3a28f;
@@ -492,8 +496,9 @@ body {
 
 .tt-post-detail-image {
   width: 100%;
-  height: 100%;
+  max-height: 420px;
   object-fit: cover;
+  display: block;
 }
 
 .tt-post-detail-body {

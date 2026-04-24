@@ -17,6 +17,8 @@ export default function ProfilePage() {
   const [error, setError] = useState("");
   const [showConfirm, setShowConfirm] = useState(false); // logout dialog
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
 
   // Load profile and user's posts
   useEffect(() => {
@@ -48,6 +50,8 @@ export default function ProfilePage() {
 
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false); 
       }
     }
     load();
@@ -154,23 +158,23 @@ export default function ProfilePage() {
 
       {/* User's posts */}
       <h2>Your posts</h2>
-
-      <div className="tt-grid">
-        {posts.map((post) => (
-          <PostCard
-            key={post._id}
-            post={post}
-            onClick={() => navigate(`/posts/${post._id}`)}
-          />
-        ))}
-
-        {posts.length === 0 && (
-          <p>
-            You haven’t shared any spots yet.
-          </p>
-        )}
-      </div>
       
+      {loading ? (
+        <p>Loading...</p>
+      ) : posts.length === 0 ? (
+        <p>You haven’t shared any spots yet.</p>
+      ) : (
+        <div className="tt-grid">
+          {posts.map((post) => (
+            <PostCard
+              key={post._id}
+              post={post}
+              onClick={() => navigate(`/posts/${post._id}`)}
+            />
+          ))}
+        </div>
+      )}
+
       {/* Logout confirmation dialog */}
       {showConfirm && (
         <div className="tt-dialog-backdrop">

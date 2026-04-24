@@ -56,53 +56,50 @@ export default function PostDetailPage() {
 
       <div className="tt-post-detail-card">
         {/* Large photo */}
-        <img
-          src={post.photoUrl || "/placeholder.jpg"}
-          alt={post.restaurantName}
-          className="tt-post-detail-image"
-        />
+        <div className="tt-post-detail-image-wrapper">
+          <img
+            src={post.photoUrl || "/placeholder.jpg"}
+            alt={post.restaurantName}
+            className="tt-post-detail-image"
+          />
+        </div>
 
         {/* Text info */}
         <div className="tt-post-detail-body">
-          <h1>{post.restaurantName}</h1>
-          <p className="tt-post-detail-city">{post.restaurantCity}</p>
+          <h1 className="tt-post-title">{post.restaurantName}</h1>
+          <p className="tt-post-city">{post.restaurantCity}</p>
 
-          {post.dishName && (
-            <p>
-              <strong>Dish:</strong> {post.dishName}
-            </p>
-          )}
+          <div className="tt-post-info">
+            {post.dishName && (
+              <p><span>Dish: </span> {post.dishName}</p>
+            )}
 
-          {post.rating && (
-            <p>
-              <strong>Rating:</strong> {post.rating} / 5
-            </p>
-          )}
+            {post.rating && (
+              <p><span>Rating: </span> {post.rating} / 5</p>
+            )}
 
-          {post.comment && (
-            <p className="tt-post-detail-comment">{post.comment}</p>
-          )}
+            {post.comment && (
+              <p className="tt-post-comment">“{post.comment}”</p>
+            )}
+          </div>
 
           {/* Edit button for owner */}
           {isOwner && (
-            <button
-              className="tt-upload-btn"
-              type="button"
-              onClick={() => navigate(`/posts/${post._id}/edit`)}
-            >
-              Edit post
-            </button>
-          )}
+            <div className="tt-post-actions">
+              <button
+                className="tt-edit-btn"
+                onClick={() => navigate(`/posts/${post._id}/edit`)}
+              >
+                Edit Post
+              </button>
 
-          {/* Delete button for owner */}
-          {isOwner && (
-            <button
-              className="tt-delete-btn"
-              type="button"
-              onClick={() => setShowConfirm(true)}
-            >
-              Delete post
-            </button>
+              <button
+                className="tt-delete-btn"
+                onClick={() => setShowConfirm(true)}
+              >
+                Delete Post
+              </button>
+            </div>
           )}
 
         </div>
