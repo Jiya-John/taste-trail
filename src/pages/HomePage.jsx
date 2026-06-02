@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchPosts } from "../api/posts";
+
 import PostGrid from "../components/PostGrid";
 
 export default function HomePage() {
@@ -12,7 +13,7 @@ export default function HomePage() {
   useEffect(() => {
     async function loadPosts() {
       try {
-        const BASE_URL = import.meta.env.API_URL;
+        const BASE_URL = import.meta.env.VITE_API_URL;
         const data = await fetchPosts();
 
         // Add photoUrl to each post
@@ -43,7 +44,7 @@ export default function HomePage() {
         />
 
         {posts.length === 0 && (
-          <p className="tt-home-status">No posts found.</p>
+          <p className="home-status">End of Taste Trail.</p>
         )}
       </div>
     </div>

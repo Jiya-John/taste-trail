@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.API_URL;
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 // Fetch posts with pagination
 export async function fetchPosts({ skip = 0, limit = 10 } = {}) {
