@@ -239,9 +239,11 @@ body {
 }
 
 
-.submit-button{
+.submit-button,
+.edit-button,
+.delete-button{
   margin-top: 0.5rem;
-  width: 100%;
+  width: 50%;
   padding: 0.8rem;
   border-radius: var(--radius-md);
   border: none;
@@ -251,4 +253,12 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.upload-button {
+  border: none;
+  background: transparent;
+  color: var(--olive);
+  font-size: 0.9rem;
+  cursor: pointer;
 }

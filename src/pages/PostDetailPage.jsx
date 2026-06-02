@@ -76,9 +76,16 @@ export default function PostDetailPage() {
             )}
           </div>
 
+
+          <div className="post-actions">
+            <button className="edit-button" onClick={() => navigate(`/posts/${post._id}/edit`)}>
+              Edit Post
+            </button>
+          </div>
+
           {/* Delete button */}
           <div className="post-actions">
-            <button className="delete-btn" onClick={handleDelete}>
+            <button className="delete-button" onClick={handleDelete}>
               Delete Post
             </button>
           </div>
