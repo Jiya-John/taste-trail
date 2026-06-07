@@ -3,18 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { fetchPosts } from "../api/posts";
 
 import PostGrid from "../components/PostGrid";
+import SearchBar from "../components/SearchBar";
 
 export default function HomePage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [q, setQ] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+
   const navigate = useNavigate();
 
-  // Load posts
+  // Load posts when search query changes
   useEffect(() => {
     async function loadPosts() {
       try {
         const BASE_URL = import.meta.env.VITE_API_URL;
-        const data = await fetchPosts();
+        const data = await fetchPosts({ q });
 
         // Add photoUrl to each post
         const mapped = data.map((p) => ({
@@ -29,15 +33,19 @@ export default function HomePage() {
         setLoading(false);
       }
     }
-
     loadPosts();
-  }, []);
+  }, [q]);
 
   if (loading) return <p>Loading posts…</p>;
 
   return (
     <div className="home">
       <div className="main">
+        <SearchBar
+          value={searchTerm}
+          onChange={setSearchTerm}
+          onSubmit={() => setQ(searchTerm.trim())}
+        />
         <PostGrid
           posts={posts}
           onPostClick={(id) => navigate(`/posts/${id}`)}

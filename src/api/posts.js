@@ -1,10 +1,11 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 // Fetch posts with pagination
-export async function fetchPosts({ skip = 0, limit = 10 } = {}) {
+export async function fetchPosts({ skip = 0, limit = 10, q = "" } = {}) {
   const params = new URLSearchParams();
   params.set("skip", skip);
   params.set("limit", limit);
+  if (q) params.set("q", q); // search by restaurant/city/dish
 
   const res = await fetch(`${BASE_URL}/api/posts?${params.toString()}`);
   if (!res.ok) throw new Error("Failed to load posts");
