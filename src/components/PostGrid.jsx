@@ -10,10 +10,6 @@ function PostGrid({ posts, onPostClick }) {
           onClick={() => onPostClick(post._id)}
         />
       ))}
-
-      {posts.length === 0 && (
-        <p>No posts found.</p>
-      )}
     </div>
   );
 }
