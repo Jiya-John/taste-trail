@@ -47,9 +47,7 @@ export default function HomePage() {
       setLoading(false);
     }
   }
-
-  //if (loading) return <p>Loading posts…</p>;
-
+  
   // Infinite scroll
   useEffect(() => {
     if (!hasMore || !loaderRef.current) return;
