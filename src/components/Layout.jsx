@@ -1,24 +1,58 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { useState } from "react";
 
 export default function Layout({ children }) {
+  const { user, logout } = useAuth();
+  const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
+
+  // Confirms logout
+  function handleLogout() {
+    logout();
+    setShowConfirm(false);
+    navigate("/login");
+  }
 
   return (
     <div className="app">
       <header className="header">
         <div className="logo" onClick={() => navigate("/")}>
-          Taste Trail
+          -tt- Taste Trail
         </div>
-        <div>
-          <button className="upload-button" onClick={() => navigate("/upload")}>
-            Upload Post
-          </button>
-        </div>
+
+        {/* Avatar opens profile */}
+        {user && (
+          <div className="header-right">
+            <button
+              className="avatar"
+              onClick={() => navigate("/profile")}
+            >
+              {user.firstName?.[0] || "U"}
+            </button>
+
+            <button className="logout-button" onClick={logout}>
+              Logout
+            </button>
+          </div>
+        )}
       </header>
 
-      <main className="main">
-        {children}
-      </main>
+      <main className="main">{children}</main>
+      {/* Logout confirmation dialog */}
+      {showConfirm && (
+        <div className="dialog-backdrop">
+          <div className="dialog">
+            <p>Are you sure you want to log out?</p>
+            <div className="dialog-actions">
+              <button onClick={() => setShowConfirm(false)}>Cancel</button>
+              <button className="primary" onClick={handleLogout}>
+                Log out
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

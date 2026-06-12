@@ -239,29 +239,23 @@ body {
   font-size: 0.85rem;
 }
 
-
+.upload-button
 .submit-button,
 .edit-button,
-.delete-button{
+.delete-button,
+.profile-button,
+.dialog-actions button{
   margin-top: 0.5rem;
   width: 50%;
   padding: 0.8rem;
   border-radius: var(--radius-md);
-  border: none;
+  border-color: var(--border);
   background: var(--accent);
   color: var(--white);
   font-size: 0.98rem;
   font-weight: 500;
   cursor: pointer;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
-}
-
-.upload-button {
-  border: none;
-  background: transparent;
-  color: var(--olive);
-  font-size: 0.9rem;
-  cursor: pointer;
 }
 
 .home-top {
@@ -311,6 +305,18 @@ body {
   background: #a94d33;
   box-shadow: var(--shadow-soft);
   transform: translateY(-1px);
+}
+
+.back {
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--accent);
+  color: var(--white);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+  margin-bottom: 2rem;
 }
 
 .auth-wrapper {
@@ -371,9 +377,10 @@ body {
   gap: 0.9rem;
 }
 
+.submit-button,
 .auth-submit {
   margin-top: 0.5rem;
-  width: 100%;
+  width: 50%;
   padding: 0.8rem;
   border-radius: var(--radius-md);
   border: none;
@@ -385,8 +392,79 @@ body {
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
 }
 
+.submit-button:hover,
 .auth-submit:hover {
   background: #a94d33;
   box-shadow: var(--shadow-soft);
   transform: translateY(-1px);
 }
+
+.profile {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.profile-header h1 {
+  font-size: 1.3rem;
+}
+
+.profile-header p {
+  font-size: 0.9rem;
+  color: var(--olive);
+}
+
+.profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logout-button {
+  border: none;
+  background: transparent;
+  color: var(--olive);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
