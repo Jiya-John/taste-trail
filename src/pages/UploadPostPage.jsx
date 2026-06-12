@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../api/posts";
+import { useAuth } from "../context/AuthContext";
 
 // Upload new post function
 export default function UploadPostPage() {
@@ -20,6 +21,7 @@ export default function UploadPostPage() {
   const [preview, setPreview] = useState(""); // preview URL
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Update text fields
   function handleChange(e) {
@@ -54,7 +56,7 @@ export default function UploadPostPage() {
       fd.append("photo", photoFile);
 
       // Text fields
-      fd.append("userId", "6a120a834cc04977baab5ef9"); // manually entering user id for initial testing. Will integrate once user login feature added
+      fd.append("userId", user._id);
       fd.append("restaurantName", form.restaurantName);
       fd.append("restaurantStreetName", form.restaurantStreetName);
       fd.append("restaurantCity", form.restaurantCity);
