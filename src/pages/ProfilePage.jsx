@@ -29,6 +29,8 @@ export default function ProfilePage() {
   // Load profile and user's posts
   useEffect(() => {
     async function load() {
+      if (!user) return; // wait until user loaded
+      
       try {
         const u = await fetchUserById(user._id);
         setProfile(u);

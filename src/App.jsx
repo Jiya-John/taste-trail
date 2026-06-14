@@ -11,7 +11,12 @@ import ProfilePage from "./pages/ProfilePage";
 
 // Protects routes so only logged-in users can access them
 function PrivateRoute({ children }) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  // if user already logged in, then loading message
+  if (loading) {
+    return <p>Loading...</p>; 
+  }
+  //if user haven't logged in, then login page
   return user ? children : <Navigate to="/login" replace />;
 }
 
@@ -26,7 +31,7 @@ function App() {
           <Route path="/posts/:id" element={<PrivateRoute><PostDetailPage /></PrivateRoute>} />
           <Route path="/upload" element={<PrivateRoute><UploadPostPage /></PrivateRoute>} /> 
           <Route path="/posts/:id/edit" element={<PrivateRoute><EditPostPage /></PrivateRoute>} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
         </Routes>
       </Layout>
     </AuthProvider>
