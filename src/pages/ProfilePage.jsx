@@ -22,6 +22,7 @@ export default function ProfilePage() {
   });
   const [posts, setPosts] = useState([]); // user's posts
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [showConfirm, setShowConfirm] = useState(false); // logout dialog
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -30,7 +31,7 @@ export default function ProfilePage() {
   useEffect(() => {
     async function load() {
       if (!user) return; // wait until user loaded
-      
+
       try {
         const u = await fetchUserById(user._id);
         setProfile(u);
@@ -78,11 +79,14 @@ export default function ProfilePage() {
   async function handleSave(e) {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     try {
       const updated = await updateUser(user._id, form);
       setProfile(updated);
       setEditing(false);
+      setSuccess("Profile updated successfully");
+      setTimeout(() => setSuccess(""), 4000); // hide after 4 sec
     } catch (err) {
       setError(err.message || "Failed to update profile");
     }
@@ -165,12 +169,13 @@ export default function ProfilePage() {
           </div>
 
           {error && <p className="error">{error}</p>}
-
+          
           <button type="submit" className="auth-submit">
             Save profile
           </button>
         </form>
       )}
+      {success && <p className="success">{success}</p>}
 
       {/* User posts */}
       <h2>Your posts</h2>

@@ -58,21 +58,21 @@ export default function PostDetailPage() {
         <div className="post-detail-body">
           <h1 className="post-title">{post.restaurantName}</h1>
 
-          <p className="post-city">
+          <p className="post-address">
             {post.restaurantStreetName}, {post.restaurantCity}, {post.restaurantProvince}, {post.restaurantCountry} {post.restaurantPostalCode}
           </p>
 
           <div className="post-info">
             {post.dishName && (
-              <p><span>Dish: </span> {post.dishName}</p>
+              <p><span><strong>Dish: </strong></span> {post.dishName}</p>
             )}
 
             {post.rating && (
-              <p><span>Rating: </span> {post.rating} / 5</p>
+              <p><span><strong>Rating: </strong></span> {post.rating} / 5</p>
             )}
 
             {post.comment && (
-              <p className="post-comment">“{post.comment}”</p>
+              <p><span><strong>Comment: </strong></span>“{post.comment}”</p>
             )}
           </div>
 
@@ -81,10 +81,7 @@ export default function PostDetailPage() {
             <button className="edit-button" onClick={() => navigate(`/posts/${post._id}/edit`)}>
               Edit Post
             </button>
-          </div>
-
-          {/* Delete button */}
-          <div className="post-actions">
+            {/* Delete button */}
             <button className="delete-button" onClick={handleDelete}>
               Delete Post
             </button>
