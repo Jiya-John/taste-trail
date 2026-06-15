@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchPostById, updatePost } from "../api/posts";
+import { useAuth } from "../context/AuthContext";
 
 export default function EditPostPage() {
   const { id } = useParams();
@@ -9,6 +10,7 @@ export default function EditPostPage() {
   const [preview, setPreview] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Load post data
   useEffect(() => {
@@ -17,8 +19,8 @@ export default function EditPostPage() {
         const data = await fetchPostById(id);
         const BASE_URL = import.meta.env.VITE_API_URL;
 
+        // Pre-fill form with existing values
         setForm({
-          userId: data.userId || "",
           restaurantName: data.restaurantName || "",
           restaurantStreetName: data.restaurantStreetName || "",
           restaurantCity: data.restaurantCity || "",
@@ -30,6 +32,7 @@ export default function EditPostPage() {
           comment: data.comment || "",
         });
 
+        // Existing photo preview
         setPreview(data.photoUrl || "");
       } catch (err) {
         console.error(err);
@@ -64,7 +67,7 @@ export default function EditPostPage() {
     try {
       const fd = new FormData();
       // Required fields
-      fd.append("userId", "6a120a834cc04977baab5ef9");
+      fd.append("userId", user._id);
       fd.append("restaurantName", form.restaurantName);
       fd.append("restaurantStreetName", form.restaurantStreetName);
       fd.append("restaurantCity", form.restaurantCity);
