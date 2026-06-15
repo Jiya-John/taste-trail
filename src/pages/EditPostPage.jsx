@@ -9,6 +9,7 @@ export default function EditPostPage() {
   const [photoFile, setPhotoFile] = useState(null);
   const [preview, setPreview] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -63,6 +64,7 @@ export default function EditPostPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     try {
       const fd = new FormData();
@@ -84,7 +86,10 @@ export default function EditPostPage() {
       }
 
       await updatePost(id, fd);
-      navigate(`/posts/${id}`);
+
+      setSuccess("Post updated successfully");
+      setTimeout(() => {navigate(`/posts/${id}`);}, 1500);
+
     } catch (err) {
       setError(err.message || "Failed to update post");
     }
@@ -209,6 +214,7 @@ export default function EditPostPage() {
         </div>
 
         {error && <p className="error">{error}</p>}
+        {success && <p className="success">{success}</p>}
 
         <div className="edit-actions">
           <button type="submit" className="submit-button">
