@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchPostById, deletePost } from "../api/posts";
+import { useAuth } from "../context/AuthContext";
 
 export default function PostDetailPage() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Load post on mount
   useEffect(() => {
@@ -36,6 +38,9 @@ export default function PostDetailPage() {
   }
 
   if (!post) return <p>Loading…</p>;
+
+  // Only show edit button if user owns the post
+  const isOwner = user && post.userId === user._id;
 
   return (
     <div className="post-detail">
@@ -76,16 +81,18 @@ export default function PostDetailPage() {
             )}
           </div>
 
-
-          <div className="post-actions">
-            <button className="edit-button" onClick={() => navigate(`/posts/${post._id}/edit`)}>
-              Edit Post
-            </button>
-            {/* Delete button */}
-            <button className="delete-button" onClick={handleDelete}>
-              Delete Post
-            </button>
-          </div>
+          {/* Edit button for owner */}
+          {isOwner && (
+            <div className="post-actions">
+              <button className="edit-button" onClick={() => navigate(`/posts/${post._id}/edit`)}>
+                Edit Post
+              </button>
+              {/* Delete button */}
+              <button className="delete-button" onClick={handleDelete}>
+                Delete Post
+              </button>
+            </div>
+          )}
 
         </div>
       </div>
