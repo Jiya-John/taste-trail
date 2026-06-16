@@ -20,6 +20,7 @@ export default function UploadPostPage() {
   const [photoFile, setPhotoFile] = useState(null); // upload file
   const [preview, setPreview] = useState(""); // preview URL
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -43,6 +44,7 @@ export default function UploadPostPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     if (!photoFile) {
       setError("Please upload a photo.");
@@ -68,7 +70,10 @@ export default function UploadPostPage() {
       fd.append("comment", form.comment);
 
       await createPost(fd);
-      navigate("/");
+
+      setSuccess("Post uploaded successfully");
+      setTimeout(() => {navigate("/");}, 1500);
+
     } catch (err) {
       setError(err.message || "Failed to upload post");
     }
@@ -188,10 +193,16 @@ export default function UploadPostPage() {
         </div>
 
         {error && <p className="error">{error}</p>}
-
-        <button type="submit" className="submit-button">
-          Upload Post
-        </button>
+        {success && <p className="success">{success}</p>}
+        
+        <div className="upload-actions">
+          <button type="submit" className="submit-button">
+            Upload Post
+          </button>
+          <button type="submit" className="submit-button" onClick={() => navigate(`/profile`)}>
+            Back
+          </button>
+        </div>
       </form>
     </div>
   );

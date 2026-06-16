@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchPostById, updatePost } from "../api/posts";
 import { useAuth } from "../context/AuthContext";
+import ConfirmDialog from "../components/ConfirmDialog";
 
 export default function EditPostPage() {
   const { id } = useParams();
@@ -12,6 +13,8 @@ export default function EditPostPage() {
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [showConfirm, setShowConfirm] = useState(false);
+
 
   // Load post data
   useEffect(() => {
@@ -62,7 +65,6 @@ export default function EditPostPage() {
 
   // Submit edited post
   async function handleSubmit(e) {
-    e.preventDefault();
     setError("");
     setSuccess("");
 
@@ -95,11 +97,16 @@ export default function EditPostPage() {
     }
   }
 
+  function handleConfirm() {
+    setShowConfirm(false);
+    handleSubmit();
+  }
+
   return (
     <div className="form-page">
       <h1>Edit post</h1>
 
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={(e) => e.preventDefault()}>
 
         {/* Photo */}
         <div className="form-field">
@@ -217,11 +224,21 @@ export default function EditPostPage() {
         {success && <p className="success">{success}</p>}
 
         <div className="edit-actions">
-          <button type="submit" className="submit-button">
+          <button type="submit" className="submit-button" onClick={() => setShowConfirm(true)}>
             Save changes
+          </button>
+          <button type="submit" className="submit-button" onClick={() => navigate(-1)}>
+            Back
           </button>
         </div>
       </form>
+      {showConfirm && (
+        <ConfirmDialog
+          message="Are you sure you want to save these changes?"
+          onCancel={() => setShowConfirm(false)}
+          onConfirm={handleConfirm}
+        />
+      )}
     </div>
   );
 }

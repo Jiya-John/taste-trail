@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchPostById, deletePost } from "../api/posts";
 import { useAuth } from "../context/AuthContext";
+import ConfirmDialog from "../components/ConfirmDialog";
+
 
 export default function PostDetailPage() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const navigate = useNavigate();
   const { user } = useAuth();
+  const [showConfirm, setShowConfirm] = useState(false);
 
   // Load post on mount
   useEffect(() => {
@@ -88,14 +91,20 @@ export default function PostDetailPage() {
                 Edit Post
               </button>
               {/* Delete button */}
-              <button className="delete-button" onClick={handleDelete}>
+              <button className="delete-button" onClick={() => setShowConfirm(true)}>
                 Delete Post
               </button>
             </div>
           )}
-
         </div>
       </div>
+      {showConfirm && (
+        <ConfirmDialog
+          message="Are you sure you want to delete this post?"
+          onCancel={() => setShowConfirm(false)}
+          onConfirm={handleDelete}
+        />
+      )}
     </div>
   );
 }

@@ -269,12 +269,10 @@ body {
   margin-top: 0.5rem;
 }
 
-.upload-button
 .submit-button,
 .edit-button,
 .delete-button,
-.profile-button,
-.dialog-actions button{
+.profile-button{
   margin-top: 0.5rem;
   width: 50%;
   padding: 0.8rem;
@@ -392,7 +390,6 @@ body {
   border-radius: 999px;
   font-size: 0.9rem;
   cursor: pointer;
-  color: var(--olive);
 }
 
 .auth-toggle button.active {
@@ -409,8 +406,8 @@ body {
 
 .submit-button,
 .auth-submit {
-  margin-top: 0.5rem;
-  width: 50%;
+  margin: 0.5rem; 
+  width: 40%;
   padding: 0.8rem;
   border-radius: var(--radius-md);
   border: none;
@@ -420,6 +417,12 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.auth-submit {
+  margin: 0.5rem auto;
+  width: 60%;
+  display: block
 }
 
 .submit-button:hover,
@@ -496,5 +499,52 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+.dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.dialog {
+  background: white;
+  padding: 20px 25px;
+  border-radius: 10px;
+  width: 320px;
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  text-align: center;
+  animation: popupFade 0.2s ease-out;
+}
+
+.dialog-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.dialog-actions button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+
+.dialog-actions .primary {
+  background: #a94d33;
+  color: white;
+}
+
+@keyframes popupFade {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 

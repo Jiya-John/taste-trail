@@ -7,8 +7,10 @@ export async function loginUser({ email, password }) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
-  if (!res.ok) throw new Error("Login failed. Email or Password is incorrect.");
-  return res.json();
+  const data = await res.json();
+
+  if (!res.ok) throw new Error(data.error || "Login failed. Email or Password is incorrect.");
+  return data;
 }
 
 // Creates a new user
