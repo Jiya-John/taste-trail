@@ -112,7 +112,7 @@ export default function ProfilePage() {
       {/* Actions - Edit profile or Upload post */}
       <div className="profile-actions">
         <button className="profile-button" onClick={() => setEditing((v) => !v)}>
-          {editing ? "Cancel" : "Edit profile"}
+          {editing ? "Back" : "Edit profile"}
         </button>
 
         <button className="profile-button" onClick={() => navigate("/upload")}>
@@ -170,9 +170,18 @@ export default function ProfilePage() {
 
           {error && <p className="error">{error}</p>}
           
-          <button type="submit" className="auth-submit">
-            Save profile
-          </button>
+          <div className="upload-actions">
+            <button type="submit" className="submit-button">
+              Save Profile
+            </button>
+            <button type="button" className="submit-button" 
+              onClick={() => {
+                setEditing(false); 
+                setSuccess(""); 
+              }}>
+              Back
+            </button>
+          </div>
         </form>
       )}
       {success && <p className="success">{success}</p>}

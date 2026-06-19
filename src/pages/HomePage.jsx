@@ -84,7 +84,7 @@ export default function HomePage() {
         {!loading && posts.length === 0 && (<p>No posts found.</p>)}
         
         {!hasMore && posts.length > 0 && (
-          <p className="home-status">End of Taste Trail.</p>
+          <p className="home-status">-~-End of Taste Trail-~-</p>
         )}
       </div>
     </div>
