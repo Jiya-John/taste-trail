@@ -48,3 +48,14 @@ export async function deletePost(id) {
   if (!res.ok) throw new Error("Failed to delete post");
   return res.json();
 }
+
+// Like posts
+export async function likePost(postId, userId) {
+  const res = await fetch(`${BASE_URL}/api/posts/${postId}/like`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId }),
+  });
+
+  return res.json(); // returns liked as true or false
+}
