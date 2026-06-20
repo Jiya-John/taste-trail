@@ -6,20 +6,28 @@ export default function PostCard({ post, onClick }) {
   const { user } = useAuth();
   const [likes, setLikes] = useState(post.likesCount || 0);
   const [liked, setLiked] = useState(post.likedBy?.includes(user?._id));
-
+  const [likeLock, setLikeLock] = useState(false);
+  
   async function handleLike(e) {
     e.stopPropagation(); // prevent opening post
 
     if (!user) return; // not allow if user not logged in
+    if (likeLock) return;
+    setLikeLock(true);
 
-    const result = await likePost(post._id, user._id);
+    try {
+      const result = await likePost(post._id, user._id);
 
-    if (result.liked) {
-      setLiked(true);
-      setLikes((l) => l + 1);
-    } else {
-      setLiked(false);
-      setLikes((l) => l - 1);
+      if (result.liked) {
+        setLiked(true);
+        setLikes((l) => l + 1);
+      } else {
+        setLiked(false);
+        setLikes((l) => l - 1);
+      }
+    }
+    finally {
+      setLikeLock(false); // unlock after API finishes
     }
   }
   return (
