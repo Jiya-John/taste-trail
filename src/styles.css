@@ -581,3 +581,25 @@ body {
   color: red;
   font-weight: bold;
 }
+
+.fav-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.fav-button:hover {
+  transform: scale(1.1);
+}
+
+.fav-button.faved {
+  color: gold;
+  font-weight: bold;
+}

@@ -17,3 +17,13 @@ export async function updateUser(id, data) {
   if (!res.ok) throw new Error("Failed to update profile");
   return res.json();
 }
+
+export async function toggleFavorite(userId, postId) {
+  const res = await fetch(`${BASE_URL}/api/users/${userId}/favorites`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ postId }),
+  });
+
+  return res.json();
+}

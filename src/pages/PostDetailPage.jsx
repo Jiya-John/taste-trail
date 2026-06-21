@@ -11,6 +11,8 @@ export default function PostDetailPage() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [showConfirm, setShowConfirm] = useState(false);
+  const [favorited, setFavorited] = useState(false);
+  const [favLock, setFavLock] = useState(false);
 
   // Load post on mount
   useEffect(() => {
@@ -30,6 +32,12 @@ export default function PostDetailPage() {
     load();
   }, [id]);
 
+  useEffect(() => {
+    if (post && user) {
+      setFavorited(user.favorites?.includes(post._id));
+    }
+  }, [post, user]);
+
   // Soft delete- status to inactive
   async function handleDelete() {
     try {
@@ -38,6 +46,28 @@ export default function PostDetailPage() {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  async function handleFavorite() {
+    if (!user || favLock) return;
+    setFavLock(true);
+
+    const result = await toggleFavorite(user._id, post._id);
+
+    setFavorited(result.favorited);
+
+    // Update user object
+    const updatedUser = {
+      ...user,
+      favorites: result.favorited
+        ? [...user.favorites, post._id]
+        : user.favorites.filter((id) => id !== post._id)
+    };
+
+    // Save to localStorage
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    
+    setFavLock(false);
   }
 
   if (!post) return <p>Loading…</p>;
@@ -64,6 +94,13 @@ export default function PostDetailPage() {
 
         {/* Text info */}
         <div className="post-detail-body">
+          <button
+            className={`fav-button ${favorited ? "faved" : ""}`}
+            onClick={handleFavorite}
+          >
+            {favorited ? "⭐" : "☆"}
+          </button>
+
           <h1 className="post-title">{post.restaurantName}</h1>
 
           <p className="post-address">
