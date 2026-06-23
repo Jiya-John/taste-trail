@@ -3,13 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import { fetchPostById, deletePost } from "../api/posts";
 import { useAuth } from "../context/AuthContext";
 import ConfirmDialog from "../components/ConfirmDialog";
-
+import { isPostFavorited, toggleFavorite } from "../api/favorites";
 
 export default function PostDetailPage() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const [showConfirm, setShowConfirm] = useState(false);
   const [favorited, setFavorited] = useState(false);
   const [favLock, setFavLock] = useState(false);
@@ -33,10 +33,18 @@ export default function PostDetailPage() {
   }, [id]);
 
   useEffect(() => {
-    if (post && user) {
-      setFavorited(user.favorites?.includes(post._id));
+    async function checkFavorite() {
+      if (post && user) {
+        try {
+          const favoritedStatus = await isPostFavorited(user._id, post._id);
+          setFavorited(favoritedStatus);
+        } catch (err) {
+          console.error(err);
+        }
+      }
     }
-  }, [post, user]);
+    checkFavorite();
+  }, [post]);
 
   // Soft delete- status to inactive
   async function handleDelete() {
@@ -52,22 +60,28 @@ export default function PostDetailPage() {
     if (!user || favLock) return;
     setFavLock(true);
 
-    const result = await toggleFavorite(user._id, post._id);
+    try {
+      const result = await toggleFavorite(user._id, post._id);
+      setFavorited(result.favorited);
 
-    setFavorited(result.favorited);
+      const currentFavorites = Array.isArray(user.favorites) ? user.favorites : [];
 
-    // Update user object
-    const updatedUser = {
-      ...user,
-      favorites: result.favorited
-        ? [...user.favorites, post._id]
-        : user.favorites.filter((id) => id !== post._id)
-    };
+      // Update user object
+      const updatedUser = {
+        ...user,
+        favorites: result.favorited
+          ? [...currentFavorites, post._id]
+          : currentFavorites.filter((id) => id !== post._id)
+      };
 
-    // Save to localStorage
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-    
-    setFavLock(false);
+      // Save to localStorage
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      setUser(updatedUser);
+    } catch(err) {
+      console.error(err);
+    } finally {
+      setFavLock(false);
+    }
   }
 
   if (!post) return <p>Loading…</p>;

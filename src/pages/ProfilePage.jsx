@@ -118,6 +118,10 @@ export default function ProfilePage() {
         <button className="profile-button" onClick={() => navigate("/upload")}>
           Upload post
         </button>
+
+        <button className="profile-button" onClick={() => navigate("/favorites")}>
+          Saved Favorites
+        </button>
       </div>
 
       {/* Edit form */}

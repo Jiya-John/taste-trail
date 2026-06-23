@@ -10,14 +10,18 @@ export function AuthProvider({ children }) {
   // Load user
   useEffect(() => {
     const stored = localStorage.getItem("user");
-    if (stored) setUser(JSON.parse(stored));
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      setUser({ ...parsed, favorites: parsed.favorites || [] });
+    }
     setLoading(false);
   }, []);
 
   // Saves user to state and localStorage
   function handleLoginSuccess(userData) {
-    setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+    const safeUser = { ...userData, favorites: userData.favorites || [] };
+    setUser(safeUser);
+    localStorage.setItem("user", JSON.stringify(safeUser));
   }
 
   // Clears login state
@@ -28,6 +32,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     user,
+    setUser,
     loading,
     login: (creds) => loginUser(creds).then(handleLoginSuccess),
     signup: (data) => signupUser(data).then(handleLoginSuccess),

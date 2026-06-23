@@ -8,6 +8,7 @@ import PostDetailPage from "./pages/PostDetailPage";
 import UploadPostPage from "./pages/UploadPostPage";
 import EditPostPage from "./pages/EditPostPage";
 import ProfilePage from "./pages/ProfilePage";
+import FavoritesPage from "./pages/FavoritesPage";
 
 // Protects routes so only logged-in users can access them
 function PrivateRoute({ children }) {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/upload" element={<PrivateRoute><UploadPostPage /></PrivateRoute>} /> 
           <Route path="/posts/:id/edit" element={<PrivateRoute><EditPostPage /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+          <Route path="/favorites" element={<PrivateRoute><FavoritesPage /></PrivateRoute>} />
         </Routes>
       </Layout>
     </AuthProvider>
