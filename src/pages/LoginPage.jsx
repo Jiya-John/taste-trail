@@ -9,11 +9,7 @@ export default function LoginPage() {
         lastName: "",
         username: "",
         email: "",
-        streetName: "",
         city: "",
-        province: "",
-        country: "",
-        postalCode: "",
         password: ""
     });
     const [error, setError] = useState("");
@@ -87,29 +83,10 @@ export default function LoginPage() {
                     </div>
 
                     <div className="form-field">
-                        <label>Street Name</label>
-                        <input name="streetName" value={form.streetName} onChange={handleChange} required />
-                    </div>
-
-                    <div className="form-field">
                         <label>City</label>
                         <input name="city" value={form.city} onChange={handleChange} required />
                     </div>
 
-                    <div className="form-field">
-                        <label>Province</label>
-                        <input name="province" value={form.province} onChange={handleChange} required />
-                    </div>
-
-                    <div className="form-field">
-                        <label>Country</label>
-                        <input name="country" value={form.country} onChange={handleChange} required />
-                    </div>
-
-                    <div className="form-field">
-                        <label>Postal Code</label>
-                        <input name="postalCode" value={form.postalCode} onChange={handleChange} required />
-                    </div>
                     </>
                 )}
 
