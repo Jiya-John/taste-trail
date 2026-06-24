@@ -18,7 +18,8 @@ export default function Layout({ children }) {
     <div className="app">
       <header className="header">
         <div className="logo" onClick={() => navigate("/")}>
-          ~tt~ Taste Trail
+          <span className="logo-mark">~tt~</span>
+          <span className="logo-text">Taste Trail</span>
         </div>
 
         {/* Avatar opens profile */}

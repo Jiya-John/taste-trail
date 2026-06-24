@@ -571,6 +571,16 @@ body {
   cursor: pointer;
 }
 
+.logo-mark {
+  color: var(--accent);
+  font-weight: 800; /* stronger bold */
+  margin-right: 0.25rem;
+}
+
+.logo-text {
+  color: var(--text);
+}
+
 .avatar {
   width: 36px;
   height: 36px;
