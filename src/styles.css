@@ -294,11 +294,15 @@ body {
 
 .home-search-form {
   display: flex;
+  flex: 1;
   gap: 0.75rem;
   width: 100%;
   margin-bottom: 1.5rem;
   flex-wrap: nowrap;
 }
+
+
+
 
 .search {
   flex: 1;
@@ -319,7 +323,8 @@ body {
   outline: none;
 }
 
-.search-button {
+.search-button,
+.rating-filter button {
   padding: 0.9rem 1.4rem;
   border-radius: var(--radius-lg);
   border: none;
@@ -331,22 +336,60 @@ body {
   transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
 }
 
+.rating-filter button:hover, 
 .search-button:hover {
   background: #a94d33;
   box-shadow: var(--shadow-soft);
   transform: translateY(-1px);
 }
 
-.back {
-  padding: 0.8rem 1.2rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  background: var(--accent);
-  color: var(--white);
-  font-size: 0.95rem;
+.rating-filter {
+  position: relative;
+}
+
+.rating-dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rating-dropdown li {
+  padding: 0.5rem;
+  text-align: center;
   cursor: pointer;
-  transition: 0.2s ease;
-  margin-bottom: 2rem;
+}
+
+.rating-dropdown li:hover {
+  background: #eee;
+}
+
+/* Mobile layout for search component*/
+@media (max-width: 600px) {
+  .home-search-form {
+    flex-wrap: wrap; /* allow wrapping */
+  }
+
+  .search-button {
+    flex: 0 0 auto; /* keep natural size */
+  }
+
+  .rating-filter {
+    flex: 1 1 100%; /* force rating to next line */
+    margin-top: 0.5rem;
+  }
+
+  .rating-filter button {
+    width: 100%; /* full width rating button on mobile */
+  }
 }
 
 .auth-wrapper {
@@ -477,6 +520,16 @@ body {
   margin-bottom: 1.5rem;
 }
 
+@media (max-width: 500px) {
+  .profile-actions {
+    flex-wrap: wrap;
+  }
+
+  .profile-actions > * {
+    flex: 1 1 100%; 
+  }
+}
+
 .home {
   display: flex;
   flex-direction: column;
@@ -486,6 +539,22 @@ body {
   margin: 0 auto;
   padding: 0;
   box-sizing: border-box;
+}
+
+.back {
+  display: flex;
+  justify-content: flex-start;
+  align-self: start;
+  padding: 0.8rem 1.2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--accent);
+  color: var(--white);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
 }
 
 .header-right {

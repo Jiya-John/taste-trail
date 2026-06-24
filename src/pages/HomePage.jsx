@@ -13,13 +13,14 @@ export default function HomePage() {
   const [q, setQ] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const loaderRef = useRef(null);
+  const [ratingFilter, setRatingFilter] = useState("All");
 
   const navigate = useNavigate();
 
   // Load posts when search query changes
   useEffect(() => {
     loadPosts(true);
-  }, [q]);
+  }, [q, ratingFilter]);
 
   async function loadPosts(reset = false) {
     if (loading) return;
@@ -29,7 +30,12 @@ export default function HomePage() {
       const nextSkip = reset ? 0 : skip;
       const BASE_URL = import.meta.env.VITE_API_URL;
 
-      const data = await fetchPosts({skip: nextSkip, limit: 8, q });
+      const data = await fetchPosts({
+        skip: nextSkip, 
+        limit: 8, 
+        q,
+        rating: ratingFilter !== "All" ? ratingFilter : undefined 
+      });
 
       // Add photoUrl to each post
       const mapped = data.map((p) => ({
@@ -71,7 +77,10 @@ export default function HomePage() {
           value={searchTerm}
           onChange={setSearchTerm}
           onSubmit={() => setQ(searchTerm.trim())}
+          ratingFilter={ratingFilter}
+          setRatingFilter={setRatingFilter}
         />
+        
         <PostGrid
           posts={posts}
           onPostClick={(id) => navigate(`/posts/${id}`)}

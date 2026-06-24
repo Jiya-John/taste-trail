@@ -65,6 +65,10 @@ export default function FavoritesPage() {
 
   return (
     <div className="home">
+      <button className="back" onClick={() => navigate(-1)}>
+        ← Back
+      </button>
+      
       <div className="main">
         <h1 className="favorites-title">Your Saved Favorites</h1>
 

@@ -122,6 +122,10 @@ export default function ProfilePage() {
         <button className="profile-button" onClick={() => navigate("/favorites")}>
           Saved Favorites
         </button>
+
+        <button className="profile-button" onClick={() => navigate("/")}>
+          Back
+        </button>
       </div>
 
       {/* Edit form */}
