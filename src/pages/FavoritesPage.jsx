@@ -32,10 +32,12 @@ export default function FavoritesPage() {
       const favPosts = await Promise.all(postPromises);
 
       const BASE_URL = import.meta.env.VITE_API_URL;
-      const mapped = favPosts.map(p => ({
-        ...p,
-        photoUrl: `${BASE_URL}/api/posts/${p._id}/photo`,
-      }));
+      const mapped = favPosts
+        .filter(p => p && p._id)   // remove null or invalid posts
+        .map(p => ({
+          ...p,
+          photoUrl: `${BASE_URL}/api/posts/${p._id}/photo`,
+        }));
 
       const newPosts = reset ? mapped : [...posts, ...mapped];
       setPosts(newPosts);
